@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missão Amor ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#ff4d6d,#ff758f);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:15px;
+overflow:hidden;
+}
+
+.container{
+background:white;
+width:100%;
+max-width:420px;
+border-radius:20px;
+padding:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+position:relative;
+}
+
+h1{color:#ff4d6d;margin-bottom:10px;}
+p{margin:10px 0;line-height:1.4;}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:#ff4d6d;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{opacity:.9;}
+
+.hidden{display:none;}
+
+.progress{
+width:100%;
+height:10px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+margin:10px 0;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#ff4d6d;
+transition:.3s;
+}
+
+/* MINI GAME */
+.heart{
+position:absolute;
+font-size:25px;
+cursor:pointer;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+from{transform:translateY(-50px);}
+to{transform:translateY(600px);}
+}
+
+/* ROULETTE */
+.roulette{
+width:150px;
+height:150px;
+border-radius:50%;
+border:5px solid #ff4d6d;
+margin:20px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+.photos{
+display:flex;
+gap:8px;
+justify-content:center;
+margin-top:15px;
+flex-wrap:wrap;
+}
+
+.photos img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+border:2px solid #ff4d6d;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- INTRO -->
+<div id="intro">
+<h1>❤️ Missão Secreta ❤️</h1>
+<p>Ana, você foi escolhida para uma missão especial do amor 😍</p>
+<button onclick="start()">Iniciar</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="hidden">
+<div class="progress"><div class="bar" id="bar"></div></div>
+<h3 id="q"></h3>
+<div id="a"></div>
+</div>
+
+<!-- GAME -->
+<div id="game" class="hidden">
+<h2>❤️ Pegue os corações!</h2>
+<p id="score">0</p>
+</div>
+
+<!-- ROULETTE -->
+<div id="rouletteScreen" class="hidden">
+<h2>🎡 Roleta do Amor</h2>
+<div class="roulette" id="roulette">GIRAR</div>
+<button onclick="spin()">Girar</button>
+<p id="reward"></p>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+<h2>💖 Surpresa Final</h2>
+
+<div class="photos">
+<img src="WhatsApp Image 2026-06-21 at 16.53.37 (1).jpeg" alt="Foto 1">
+<img src="WhatsApp Image 2026-06-21 at 16.53.37.jpeg" alt="Foto 2">
+<img src="WhatsApp Image 2026-06-21 at 16.53.38.jpeg" alt="Foto 3">
+
+</div>
+
+<p>
+Minha esposa ❤️<br><br>
+Você é a melhor parte dos meus dias.<br>
+Obrigado por ser minha princesa.<br><br>
+— Leandro
+</p>
+
+<button onclick="confetti()">Explodir Amor 🎉</button>
+</div>
+
+</div>
+
+<script>
+
+const quiz = [
+{
+q:"Qual apelido eu mais uso pra você?",
+a:["Aninha","Princesa","Mb"],
+c:1
+},
+{
+q:"Qual nosso restaurante favorito?",
+a:["Bololo","Bosque Encantado","Podrão"],
+c:1
+},
+{
+q:"Primeira viagem de moto?",
+a:["Iriri","Santa Teresa"],
+c:1
+}
+];
+
+let i=0;
+let score=0;
+
+function start(){
+document.getElementById("intro").classList.add("hidden");
+document.getElementById("quiz").classList.remove("hidden");
+show();
+}
+
+function show(){
+let p=quiz[i];
+document.getElementById("q").innerText=p.q;
+document.getElementById("bar").style.width=(i/quiz.length)*100+"%";
+
+let html="";
+p.a.forEach((x,idx)=>{
+html+=`<button onclick="ans(${idx})">${x}</button>`;
+});
+document.getElementById("a").innerHTML=html;
+}
+
+function ans(n){
+if(n===quiz[i].c)score++;
+i++;
+if(i<quiz.length){
+show();
+}else{
+game();
+}
+}
+
+function game(){
+document.getElementById("quiz").classList.add("hidden");
+document.getElementById("game").classList.remove("hidden");
+
+let s=0;
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*300+"px";
+
+heart.onclick=()=>{s++;heart.remove();document.getElementById("score").innerText=s;if(s>=10)next();}
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),3000);
+},600);
+}
+
+function next(){
+document.getElementById("game").classList.add("hidden");
+document.getElementById("rouletteScreen").classList.remove("hidden");
+}
+
+function spin(){
+let gifts=[
+"Beijo infinito 😘",
+"Abraço forte 🤗",
+"Filme juntinhos 🎬",
+"Vale jantar 🍕",
+"Surpresa especial 🎁"
+];
+
+let r=gifts[Math.floor(Math.random()*gifts.length)];
+document.getElementById("reward").innerText=r;
+}
+
+function confetti(){
+alert("💖 Te amo Princesa 💖");
+document.getElementById("final").classList.add("show");
+}
+
+setTimeout(()=>{
+document.getElementById("rouletteScreen").classList.add("hidden");
+document.getElementById("final").classList.remove("hidden");
+},30000);
+
+</script>
+
+</body>
+</html>
