@@ -83,18 +83,7 @@ from{transform:translateY(-50px);}
 to{transform:translateY(600px);}
 }
 
-/* ROULETTE */
-.roulette{
-width:150px;
-height:150px;
-border-radius:50%;
-border:5px solid #ff4d6d;
-margin:20px auto;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-}
+
 
 .photos{
 display:flex;
@@ -239,14 +228,7 @@ document.getElementById("game").classList.add("hidden");
 document.getElementById("rouletteScreen").classList.remove("hidden");
 }
 
-function spin(){
-let gifts=[
-"Beijo infinito 😘",
-"Abraço forte 🤗",
-"Filme juntinhos 🎬",
-"Vale jantar 🍕",
-"Surpresa especial 🎁"
-];
+
 
 let r=gifts[Math.floor(Math.random()*gifts.length)];
 document.getElementById("reward").innerText=r;
